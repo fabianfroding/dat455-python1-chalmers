@@ -28,9 +28,23 @@ def powers(list, num1, num2):
 
 
 
-# def matmul(mat1, mat2):
-   #   print('matmul called')
+def matmul(mat1, mat2):
+    mat1Rows = len(mat1[0])
+    mat1Cols = len(mat1)
+    mat2Rows = len(mat2[0])
+    mat2Cols = len(mat2)
+    newMat = [[0 for x in range(mat1Rows)] for y in range(mat1Cols)]
 
+    for i in range(0, mat1Cols):
+        for j in range(0, mat1Rows):
+            k = mat1[i][j] * mat2[j][i]
+            #print(mat1[i][j])
+            print(mat2[mat2Rows - 1 - j][mat2Cols - 1 - i])
+            #print(k)
+            #print(str(mat1[i][j]) + " * " + str(mat2[j][i]) + " = " + str(k))
+            #newMat[i][j] = mat1[i][j]
+
+    return newMat
 
 
 # def invert():
@@ -51,3 +65,8 @@ def powers(list, num1, num2):
 # print(powers([2], 0, 0)) # [[1]])
 # print(powers([2], 0, -1)) # [[]])
 # print(powers([2, 3], 0, 2)) # [[1, 2, 4], [1, 3, 9]])
+
+s1 = [[0, 1], [1, 0]]
+s3 = [[1, 0], [0, -1]]
+
+print(matmul(s1, s3))
