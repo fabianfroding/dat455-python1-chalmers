@@ -32,9 +32,9 @@ def matmul(mat1, mat2):
     if mat1 != [] and mat2 != []:
 
         # Setup dimensions of result matrix
-        newMatRows = len(mat1) if len(mat1) > len(mat2) else len(mat2)
-        newMatCols = len(mat1[0]) if len(mat1[0]) > len(mat2[0]) else len(mat2[0])
-        newMat = [[0 for x in range(newMatRows)] for y in range(newMatCols)]
+        newMatRows = len(mat1)
+        newMatCols = len(mat2[0])
+        newMat = [[0 for x in range(newMatCols)] for y in range(newMatRows)]
 
         print(newMatRows)
         print(newMatCols)
@@ -53,8 +53,20 @@ def matmul(mat1, mat2):
     return []
 
 
-# def invert():
-   #   print('invert called')
+
+def det(a, b, c, d):
+    return a * d - b * c
+
+def invert(matrix):
+    print('invert called')
+    newMat = [[0 for x in range(len(matrix))] for y in range(len(matrix[0]))]
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            print(matrix[i][j])
+            newMat[i][j] = matrix[i][j]
+
+    return newMat
 
 
 
@@ -65,7 +77,7 @@ def matmul(mat1, mat2):
 
 # print(transpose([[1, 2], [3, 4], [5, 6]]))
 
-
+# ===== TESTING powers ===== #
 # print(powers([2, 3, 4], 0, 2)) # [[1, 2, 4], [1, 3, 9], [1, 4, 16]]
 # print(powers([], 0, 10)) # []
 # print(powers([2], 0, 2)) # [[1, 2, 4]]
@@ -73,7 +85,7 @@ def matmul(mat1, mat2):
 # print(powers([2], 0, -1)) # [[]])
 # print(powers([2, 3], 0, 2)) # [[1, 2, 4], [1, 3, 9]])
 
-
+# ===== TESTING matmul ===== #
 #print(matmul([[0, 1], [1, 0]], [[1, 0], [0, -1]]))
 #print(matmul([], [])) # []
 #print(matmul([[2]], [[4]])) # [[8]]
@@ -81,9 +93,14 @@ def matmul(mat1, mat2):
 #print(matmul([[1, 2], [3, 4]], [[0, 1], [1, 0]])) # [[2, 1], [4, 3]]
 #print(matmul([[1, 2], [3, 4]], [[1, 0], [0, 1]])) # [[1, 2], [3, 4]]
 #print(matmul([[1, 2], [3, 4], [5, 6]], [[1, 1, 1], [1, 1, 1]])) # [[3, 3, 3], [7, 7, 7], [11, 11, 11]]
-print(matmul([[1, 2, 3], [4, 5, 6]], [[7, 8, 9, 10], [11, 12, 13, 14], [15, 16, 17, 18]]))
+#print(matmul([[1, 2, 3], [4, 5, 6]], [[7, 8, 9, 10], [11, 12, 13, 14], [15, 16, 17, 18]]))
 # [[74, 80, 86, 92], [173, 188, 203, 218]]
 #print(matmul([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[1, 0, 0], [0, 1, 0], [0, 0, 1]]))
 # [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 #print(matmul([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]))
 # [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+# ===== TESTING invert ===== #
+print(invert([[1, 2], [3, 4]])) # [[1, 0], [0, 1]]
+#print(invert([[0, 1], [1, 0]])) # [[0, 1], [1, 0]]
+#print(invert([[1, 2], [3, 4]])) # [[-2.0, 1.0], [1.5, -0.5]]
