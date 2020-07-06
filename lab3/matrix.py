@@ -54,18 +54,24 @@ def matmul(mat1, mat2):
 
 
 
-def det(a, b, c, d):
+# Assuming we are dealing with 2x2 matrices
+def det(matrix):
+    a = matrix[0][0]
+    b = matrix[0][1]
+    c = matrix[1][0]
+    d = matrix[1][1]
     return a * d - b * c
 
 def invert(matrix):
-    print('invert called')
     newMat = [[0 for x in range(len(matrix))] for y in range(len(matrix[0]))]
 
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
-            print(matrix[i][j])
-            newMat[i][j] = matrix[i][j]
+            #print(matrix[len(matrix) - 1 - i][len(matrix[0]) - 1 - j])
+            newMat[i][j] = matrix[len(matrix) - 1 - j][len(matrix[0]) - 1 - i] / det(matrix)
 
+    newMat[0][1] = -(newMat[0][1])
+    newMat[1][0] = -(newMat[1][0])
     return newMat
 
 
@@ -101,6 +107,6 @@ def invert(matrix):
 # [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 # ===== TESTING invert ===== #
-print(invert([[1, 2], [3, 4]])) # [[1, 0], [0, 1]]
-#print(invert([[0, 1], [1, 0]])) # [[0, 1], [1, 0]]
-#print(invert([[1, 2], [3, 4]])) # [[-2.0, 1.0], [1.5, -0.5]]
+print(invert([[1, 0], [0, 1]])) # [[1, 0], [0, 1]]
+print(invert([[0, 1], [1, 0]])) # [[0, 1], [1, 0]]
+print(invert([[1, 2], [3, 4]])) # [[-2.0, 1.0], [1.5, -0.5]]
