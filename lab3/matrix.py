@@ -36,8 +36,8 @@ def matmul(mat1, mat2):
         newMatCols = len(mat2[0])
         newMat = [[0 for x in range(newMatCols)] for y in range(newMatRows)]
 
-        print(newMatRows)
-        print(newMatCols)
+        #print(newMatRows)
+        #print(newMatCols)
 
         # Row of mat 1
         for i in range(len(mat1)):
@@ -76,8 +76,12 @@ def invert(matrix):
 
 
 
-# def loadtxt():
-    #  print('loadtxt called')
+def loadtxt(file):
+    lines = open(file)
+    vals = []
+    for line in lines:
+        vals.append(line.split())
+    return(vals)
 
 
 
@@ -107,6 +111,9 @@ def invert(matrix):
 # [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 # ===== TESTING invert ===== #
-print(invert([[1, 0], [0, 1]])) # [[1, 0], [0, 1]]
-print(invert([[0, 1], [1, 0]])) # [[0, 1], [1, 0]]
-print(invert([[1, 2], [3, 4]])) # [[-2.0, 1.0], [1.5, -0.5]]
+#print(invert([[1, 0], [0, 1]])) # [[1, 0], [0, 1]]
+#print(invert([[0, 1], [1, 0]])) # [[0, 1], [1, 0]]
+#print(invert([[1, 2], [3, 4]])) # [[-2.0, 1.0], [1.5, -0.5]]
+
+# ===== TESTING loadtxt ===== #
+print(loadtxt("chirps.txt"))
