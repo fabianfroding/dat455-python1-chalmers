@@ -67,7 +67,7 @@ def invert(matrix):
 
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
-            #print(matrix[len(matrix) - 1 - i][len(matrix[0]) - 1 - j])
+            print(matrix[len(matrix) - 1 - j][len(matrix[0]) - 1 - i])
             newMat[i][j] = matrix[len(matrix) - 1 - j][len(matrix[0]) - 1 - i] / det(matrix)
 
     newMat[0][1] = -(newMat[0][1])
@@ -88,12 +88,12 @@ def loadtxt(file):
 # print(transpose([[1, 2], [3, 4], [5, 6]]))
 
 # ===== TESTING powers ===== #
-# print(powers([2, 3, 4], 0, 2)) # [[1, 2, 4], [1, 3, 9], [1, 4, 16]]
-# print(powers([], 0, 10)) # []
-# print(powers([2], 0, 2)) # [[1, 2, 4]]
-# print(powers([2], 0, 0)) # [[1]])
-# print(powers([2], 0, -1)) # [[]])
-# print(powers([2, 3], 0, 2)) # [[1, 2, 4], [1, 3, 9]])
+#print(powers([2, 3, 4], 0, 2)) # [[1, 2, 4], [1, 3, 9], [1, 4, 16]]
+#print(powers([], 0, 10)) # []
+#print(powers([2], 0, 2)) # [[1, 2, 4]]
+#print(powers([2], 0, 0)) # [[1]])
+#print(powers([2], 0, -1)) # [[]])
+#print(powers([2, 3], 0, 2)) # [[1, 2, 4], [1, 3, 9]])
 
 # ===== TESTING matmul ===== #
 #print(matmul([[0, 1], [1, 0]], [[1, 0], [0, -1]]))
@@ -116,4 +116,4 @@ def loadtxt(file):
 #print(invert([[1, 2], [3, 4]])) # [[-2.0, 1.0], [1.5, -0.5]]
 
 # ===== TESTING loadtxt ===== #
-print(loadtxt("chirps.txt"))
+#print(loadtxt("chirps.txt"))
