@@ -67,7 +67,7 @@ def invert(matrix):
 
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
-            print(matrix[len(matrix) - 1 - j][len(matrix[0]) - 1 - i])
+            #print(matrix[len(matrix) - 1 - j][len(matrix[0]) - 1 - i])
             newMat[i][j] = matrix[len(matrix) - 1 - j][len(matrix[0]) - 1 - i] / det(matrix)
 
     newMat[0][1] = -(newMat[0][1])
@@ -114,6 +114,7 @@ def loadtxt(file):
 #print(invert([[1, 0], [0, 1]])) # [[1, 0], [0, 1]]
 #print(invert([[0, 1], [1, 0]])) # [[0, 1], [1, 0]]
 #print(invert([[1, 2], [3, 4]])) # [[-2.0, 1.0], [1.5, -0.5]]
+#print(invert([[0.0, 931.0], [0.0, 20282.76728]]))
 
 # ===== TESTING loadtxt ===== #
 #print(loadtxt("chirps.txt"))
