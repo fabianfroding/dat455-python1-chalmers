@@ -1,12 +1,29 @@
 import sys
 import matplotlib.pyplot as plt
-from matrix import *
+from numpy import *
+
+
+
+def powers(list, num1, num2):
+    if len(list):
+        rows = len(list)
+        cols = num2 + 1
+        mat = [[0 for x in range(cols)] for y in range(rows)]
+
+        for i in range(0, rows):
+            for j in range(num1, cols):
+                mat[i][j] = pow(list[i], j)
+
+        return array(mat)
+    return array([])
 
 
 
 def load():
     arg1 = sys.argv[1]
+    arg2 = sys.argv[2]
     measurements = loadtxt(arg1)
+    n = arg2
     
     # Convert str to floats
     for i in range(len(measurements)):
@@ -23,9 +40,8 @@ def load():
 
     m1 = matmul(Xpt, Xp)
     m2 = matmul(Xpt, Yp)
-    # [[b], [m]] produces "too many values to unpack".
-    # Using below method instead and then b[1], m[1], to get correct values.
-    b, m = matmul(invert(matmul(Xpt, Xp)), matmul(Xpt, Yp))
+    m1Invert = linalg.pinv(m1)
+    b, m = matmul(linalg.inv(matmul(Xpt,Xp)),matmul(Xpt,Yp))
 
     Y2 = []
     for i in range(len(X)):
