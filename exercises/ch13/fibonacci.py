@@ -31,6 +31,5 @@ def fib(n):
 
 
 
-
 print(fib(int(sys.argv[1])))
 print("fib(" + str(numN) + ") was computed " + str(countN) + " times")
