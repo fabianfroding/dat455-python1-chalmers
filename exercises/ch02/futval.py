@@ -9,9 +9,10 @@ def main():
     years = eval(input("Enter the number of years: "))
     principal = eval(input("Enter the initial principal: "))
     apr = eval(input("Enter the annual interest rate: "))
+    fixed = eval(input("Enter a fixed amount to invest each year: "))
 
     for i in range(years):
-        principal = principal * (1 + apr)
+        principal = principal * (1 + apr) + fixed
 
     print("The value in " + str(years) + " years is:", principal)
 
