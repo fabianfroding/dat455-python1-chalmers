@@ -74,6 +74,7 @@ class Player:
         self.game = game
         self.color = color
         self.x = x
+        self.score = 0
 
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
     def fire(self, angle, velocity):
@@ -93,18 +94,23 @@ class Player:
         # The distance should be how far the projectile and cannon are from touching, not the distance between their centers.
         # You probably need to use getCannonSize and getBallSize from Game to compensate for the size of cannons/cannonballs
  
-        dist = (self.getX() - self.game.cannonSize) - (proj.getX() - self.game.getBallSize())
-        print("Dist: " + str(dist))
+        dist = 0
 
-        return -dist
+        if self.getX() > proj.getX():
+            dist = -(self.getX() - proj.getX() - self.game.getCannonSize() + self.game.getBallSize() - 1)
+        elif self.getX() < proj.getX():
+            dist = -(self.getX() - proj.getX() + self.game.getCannonSize() - self.game.getBallSize() + 1)
+
+        print("Dist: " + str(dist))
+        return dist
 
     """ The current score of this player """
     def getScore(self):
-        return 0 #TODO: this is just a dummy value
+        return self.score
 
     """ Increase the score of this player by 1."""
     def increaseScore(self):
-        pass #TODO: this should do something instead of nothing
+        self.score += 1
 
     """ Returns the color of this player (a string)"""
     def getColor(self):
