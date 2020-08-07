@@ -81,7 +81,10 @@ class Player:
         # The projectile should start in the middle of the cannon of the firing player
         # HINT: Your job here is to call the constructor of Projectile with all the right values
         # Some are hard-coded, like the boundaries for x-position, others can be found in Game or Player
-        proj = Projectile(angle, velocity, self.game.getCurrentWind(), self.x, self.game.cannonSize / 2, -110, 110)
+
+        print("player x: " + str(self.x))
+
+        proj = Projectile(-angle, velocity, self.game.getCurrentWind(), self.x, self.game.cannonSize / 2, -110, 110)
         self.lastAngle = angle
         self.lastVelocity = velocity
         self.currentProjectile = proj
@@ -96,13 +99,19 @@ class Player:
  
         dist = 0
 
-        if self.getX() > proj.getX():
-            dist = -(self.getX() - proj.getX() - self.game.getCannonSize() + self.game.getBallSize() - 1)
-        elif self.getX() < proj.getX():
-            dist = -(self.getX() - proj.getX() + self.game.getCannonSize() - self.game.getBallSize() + 1)
+        #if self.getX() > proj.getX():
+        #    dist = -(self.getX() - proj.getX() - self.game.getCannonSize() + self.game.getBallSize() - 1)
+        #elif self.getX() < proj.getX():
+        #    dist = -(self.getX() - proj.getX() + self.game.getCannonSize() - self.game.getBallSize() + 1)
 
         print("Dist: " + str(dist))
-        return dist
+        if (self == self.game.players[0]):
+            print("is player 0")
+            return -(self.getX() + self.game.getCannonSize()) + (proj.getX() + self.game.getBallSize() - 1)
+        else:
+            print("is player 1")
+            return -(self.getX() - self.game.getCannonSize()) + (proj.getX() - self.game.getBallSize() + 1)
+        
 
     """ The current score of this player """
     def getScore(self):
@@ -145,7 +154,6 @@ class Projectile:
         self.xvel = velocity * cos(theta)
         self.yvel = velocity * sin(theta)
         self.wind = wind
-
 
     """ 
         Advance time by a given number of seconds
