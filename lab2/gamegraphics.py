@@ -25,11 +25,28 @@ from graphics import *
 # HINT: Don't forget to call draw() on every component you create, otherwise they will not be visible
 # HINT: You need to get the Players from the Game object (the model), wrap them into GraphicPlayers and store them, and all get-methods for players (e.g. getCurrentPlayer) must return the Graphical versions
 
+class GraphicGame:
+    def __init__(self, game):
+        self.model = game
+        self.model.players[0] = GraphicPlayer(self.model.players[0])
+        self.model.players[1] = GraphicPlayer(self.model.players[1])
+
+        win = GraphWin("Cannon game" , 640, 480, autoflush=False)
+        win.setCoords(-110, -10, 110, 155)
+        self.win = win
+
+    def getPlayers(self):
+        return self.model.getPlayers()
+
 class GraphicPlayer:
     # TODO: We need a constructor here! The constructor needs to take a Player object as parameter and store it in self.player for the methods below to work.
     # HINT: The constructor should create and draw the graphical elements of the player (score and cannon)
     # HINT: The constructor probably needs a few additional parameters e.g. to access the game window.
     
+    def __init__(self, player):
+        self.player = player
+        print("graphic player created")
+
     def fire(self, angle, vel):
         # Fire the cannon of the underlying player object
         proj = self.player.fire(angle, vel)

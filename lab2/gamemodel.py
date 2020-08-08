@@ -7,15 +7,16 @@ import random
 class Game:
     """ Create a game with a given size of cannon (length of sides) and projectiles (radius) """
     def __init__(self, cannonSize, ballSize):
-        p1 = Player(self, "blue", -90)
-        p2 = Player(self, "red", 90)
+        # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
+        # HINT: This constructor needs to create two players according to the rules specified in the assignment text
+        
+        p1 = Player(0, self, "blue", -90)
+        p2 = Player(1, self, "red", 90)
         self.players = [p1, p2]
+
         self.currentPlayer = p1
-
         self.cannonSize = cannonSize
-
         self.ballSize = ballSize
-
         self.currentWind = 0
 
     """ A list containing both players """
@@ -49,14 +50,14 @@ class Game:
     
     """ Switch active player """
     def nextPlayer(self):
-        temp = self.players[0]
-        self.players[0] = self.players[1]
-        self.players[1] = temp
+        if self.currentPlayer == self.players[0]:
+            self.currentPlayer = self.players[1]
+        else:
+            self.currentPlayer = self.players[0]
 
     """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
         self.currentWind = wind
-
     
     def getCurrentWind(self):
         return self.currentWind
@@ -70,7 +71,10 @@ class Game:
 
 """ Models a player """
 class Player:
-    def __init__(self, game, color, x):
+    #TODO: You need to create a constructor here. 
+    #HINT: It should probably take the Game that creates it as parameter and some additional properties that differ between players (like firing-direction, position and color)
+    def __init__(self, number, game, color, x):
+        self.number = number
         self.game = game
         self.color = color
         self.x = x
@@ -82,9 +86,11 @@ class Player:
         # HINT: Your job here is to call the constructor of Projectile with all the right values
         # Some are hard-coded, like the boundaries for x-position, others can be found in Game or Player
 
-        print("player x: " + str(self.x))
+        if (self.number == 1):
+            angle = -angle
+            velocity = -velocity
 
-        proj = Projectile(-angle, velocity, self.game.getCurrentWind(), self.x, self.game.cannonSize / 2, -110, 110)
+        proj = Projectile(angle, velocity, self.game.getCurrentWind(), self.x, self.game.cannonSize / 2, -110, 110)
         self.lastAngle = angle
         self.lastVelocity = velocity
         self.currentProjectile = proj
@@ -97,21 +103,20 @@ class Player:
         # The distance should be how far the projectile and cannon are from touching, not the distance between their centers.
         # You probably need to use getCannonSize and getBallSize from Game to compensate for the size of cannons/cannonballs
  
-        dist = 0
-
-        #if self.getX() > proj.getX():
-        #    dist = -(self.getX() - proj.getX() - self.game.getCannonSize() + self.game.getBallSize() - 1)
-        #elif self.getX() < proj.getX():
-        #    dist = -(self.getX() - proj.getX() + self.game.getCannonSize() - self.game.getBallSize() + 1)
-
-        print("Dist: " + str(dist))
-        if (self == self.game.players[0]):
-            print("is player 0")
-            return -(self.getX() + self.game.getCannonSize()) + (proj.getX() + self.game.getBallSize() - 1)
+        dist = proj.getX() - self.getX()
+        if (dist < 0):
+            # Player 1
+            dist = (proj.getX() - self.game.getBallSize()) - (self.getX() - self.game.getCannonSize()) + 1
+            if dist <= self.game.getBallSize() - self.game.getCannonSize() and dist >= self.game.getBallSize() + self.game.getCannonSize():
+                return 0
         else:
-            print("is player 1")
-            return -(self.getX() - self.game.getCannonSize()) + (proj.getX() - self.game.getBallSize() + 1)
-        
+            # Player 0
+            dist = (proj.getX() + self.game.getBallSize()) - (self.getX() + self.game.getCannonSize()) - 1
+            if dist >= self.game.getBallSize() - self.game.getCannonSize() and dist <= self.game.getBallSize() + self.game.getCannonSize():
+                return 0
+        #print("dist: " + str(dist))
+
+        return dist
 
     """ The current score of this player """
     def getScore(self):
@@ -151,9 +156,10 @@ class Projectile:
         self.xLower = xLower
         self.xUpper = xUpper
         theta = radians(angle)
-        self.xvel = velocity * cos(theta)
-        self.yvel = velocity * sin(theta)
+        self.xvel = velocity*cos(theta)
+        self.yvel = velocity*sin(theta)
         self.wind = wind
+
 
     """ 
         Advance time by a given number of seconds

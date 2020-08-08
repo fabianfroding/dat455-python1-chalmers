@@ -80,6 +80,7 @@ def runTests(game):
     assert(proj.getY() == 10/2), "Fired projectile Y-position should start half the cannon size"
     assert(proj.isMoving()), "projectile should be moving"
 
+    # If you get an error here but not for player 0, keep in mind that players should fire in opposite horizontal direction for the same angle value!
     ticks = 0
     while proj.isMoving():
         proj.update(0.1)
@@ -89,7 +90,7 @@ def runTests(game):
     assert proj.getY()==0.0, "projectile should always stop at y=0"
     assert abs(proj.getX() - -86.84740597475547) < 0.01, "Projectile X-Position is {0:f}, should be -86.84740597475547".format(proj.getX())
     assert abs(players[1].projectileDistance(proj) - -168.84740597475547) < 0.01, "Projectile X-distance to player is {0:f}, should be 168.84740597475547".format(players[1].projectileDistance(proj))
-    assert players[0].projectileDistance(proj) == 0, "Projectile X-distance to player is {0:f}, should be 0".format(players[1].projectileDistance(proj))
+    assert players[0].projectileDistance(proj) == 0, "Projectile X-distance to player is {0:f}, should be 0".format(players[0].projectileDistance(proj))
 
     # Test scoring
     assert players[0].getScore()==0, "Initial score should be 0"
@@ -122,8 +123,8 @@ def runTests(game):
     
     # A few additional hints
     gameAtts = len(game.__dict__.items())
-    if (gameAtts > 5):
-        print("Your Game object has {} attributes. This isn't necessarily wrong, but 5 seems like a nice number.".format(gameAtts))
+    if (gameAtts > 6):
+        print("Your Game object has {} attributes. This isn't necessarily wrong, but 5-6 seems like a nice number.".format(gameAtts))
         print("Make sure you are not representing the same information in multiple attributes.")
     playerAtts = len(game.getCurrentPlayer().__dict__.items())
     if (playerAtts > 8):
@@ -165,4 +166,3 @@ runTests(gamemodel.Game(10,3))
 
 ggame = gamegraphics.GraphicGame(gamemodel.Game(10, 3))
 testGraphics(ggame)
-
