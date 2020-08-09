@@ -1,17 +1,12 @@
 from math import sin,cos,radians
 import random
 
-#TODO: Deal with all TODOs in this file and also remove the TODO and HINT comments.
-
 """ This is the model of the game"""
 class Game:
     """ Create a game with a given size of cannon (length of sides) and projectiles (radius) """
     def __init__(self, cannonSize, ballSize):
-        # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
-        # HINT: This constructor needs to create two players according to the rules specified in the assignment text
-        
-        p1 = Player(0, self, "blue", -90)
-        p2 = Player(1, self, "red", 90)
+        p1 = Player(self, "blue", -90)
+        p2 = Player(self, "red", 90)
         self.players = [p1, p2]
 
         self.currentPlayer = p1
@@ -64,17 +59,11 @@ class Game:
 
     """ Start a new round with a random wind value (-10 to +10) """
     def newRound(self):
-        #HINT: random.random() gives a random value between 0 and 1
-        # multiplying this by 20 gives a random value between 0 and 20
-        # how do you shift a value between 0 and 20 to one between -10 and +10?
         self.currentWind = random.random() * 20 - 10
 
 """ Models a player """
 class Player:
-    #TODO: You need to create a constructor here. 
-    #HINT: It should probably take the Game that creates it as parameter and some additional properties that differ between players (like firing-direction, position and color)
-    def __init__(self, number, game, color, x):
-        self.number = number
+    def __init__(self, game, color, x):
         self.game = game
         self.color = color
         self.x = x
@@ -82,11 +71,7 @@ class Player:
 
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
     def fire(self, angle, velocity):
-        # The projectile should start in the middle of the cannon of the firing player
-        # HINT: Your job here is to call the constructor of Projectile with all the right values
-        # Some are hard-coded, like the boundaries for x-position, others can be found in Game or Player
-
-        if (self.number == 1):
+        if (self.color == "red"):
             angle = -angle
             velocity = -velocity
 
@@ -94,15 +79,11 @@ class Player:
         self.lastAngle = angle
         self.lastVelocity = velocity
         self.currentProjectile = proj
+        print("fired from model!")
         return proj
 
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
-        # HINT: both self (a Player) and proj (a Projectile) have getX()-methods.
-        # HINT: This method should give a negative value if the projectile missed to the left and positive if it missed to the right.
-        # The distance should be how far the projectile and cannon are from touching, not the distance between their centers.
-        # You probably need to use getCannonSize and getBallSize from Game to compensate for the size of cannons/cannonballs
- 
         dist = proj.getX() - self.getX()
         if (dist < 0):
             # Player 1
@@ -114,7 +95,6 @@ class Player:
             dist = (proj.getX() + self.game.getBallSize()) - (self.getX() + self.game.getCannonSize()) - 1
             if dist >= self.game.getBallSize() - self.game.getCannonSize() and dist <= self.game.getBallSize() + self.game.getCannonSize():
                 return 0
-        #print("dist: " + str(dist))
 
         return dist
 
