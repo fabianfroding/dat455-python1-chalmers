@@ -28,12 +28,16 @@ from graphics import *
 class GraphicGame:
     def __init__(self, game):
         self.model = game
-        #self.model.players[0] = GraphicPlayer(self.model.players[0])
-        #self.model.players[1] = GraphicPlayer(self.model.players[1])
 
         win = GraphWin("Cannon game" , 640, 480, autoflush=False)
         win.setCoords(-110, -10, 110, 155)
         self.win = win
+
+        self.model.players[0] = GraphicPlayer(self.model.players[0], win)
+        self.model.players[1] = GraphicPlayer(self.model.players[1], win)
+
+        self.model.currentPlayer = self.model.players[0]
+        self.model.otherPlayer = self.model.players[1]
 
     def getPlayers(self):
         return self.model.getPlayers()
@@ -76,7 +80,6 @@ class GraphicPlayer:
     def __init__(self, player, win):
         self.player = player
         self.win = win
-        self.lastProj = null
 
     def fire(self, angle, vel):
         # Fire the cannon of the underlying player object
