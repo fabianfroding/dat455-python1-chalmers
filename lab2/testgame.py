@@ -161,7 +161,6 @@ def testGraphics(ggame):
     
     assert len(circles) <= 2, "there should never be more than two circles! You need to undraw old cannonballs"
 
-
 runTests(gamemodel.Game(10,3))
 
 ggame = gamegraphics.GraphicGame(gamemodel.Game(10, 3))

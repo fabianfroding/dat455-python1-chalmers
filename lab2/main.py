@@ -18,7 +18,24 @@ def graphicPlay():
     # HINT: Creating a GraphicGame is a good start. 
     # HINT: You can look at the text interface for some inspiration
     # Note that this code should not directly work with any drawing or such, all that is done by the methods in the classes
-    pass
+    game = GraphicGame(Game(10, 3))
+    game.newRound()
+
+    inputDialog = InputDialog(0, 0, game.getCurrentWind())
+
+    while(True):
+        choice = inputDialog.interact()
+
+        if choice == "Quit":
+            inputDialog.close()
+            game.getWindow().close()
+            break
+        else:
+            (ang, vel) = inputDialog.getValues()
+            print(ang)
+            print(vel)
+            graphicFire(game, ang, vel)
+
 
 
 # Run the game with graphical interface

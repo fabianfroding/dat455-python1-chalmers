@@ -15,8 +15,6 @@
 # This is the only place where graphics should be imported!
 from graphics import *
 
-# TODO: There needs to be a class called GraphicGame here. 
-# Its constructor should take only a Game object.
 # TODO: In addition to the methods of Game, GraphicGame needs to have a getWindow method that returns the main GraphWin object the game is played in
 # HINT: Look at the other classes in this file, the GraphicGame class should "wrap around" a Game object the same way GraphicPlayer wraps around a Player
 # HINT: These lines are good for creating a window:
@@ -33,8 +31,8 @@ class GraphicGame:
         win.setCoords(-110, -10, 110, 155)
         self.win = win
 
-        self.model.players[0] = GraphicPlayer(self.model.players[0], win)
-        self.model.players[1] = GraphicPlayer(self.model.players[1], win)
+        self.model.players[0] = GraphicPlayer(self, self.model.players[0], win)
+        self.model.players[1] = GraphicPlayer(self, self.model.players[1], win)
 
         self.model.currentPlayer = self.model.players[0]
         self.model.otherPlayer = self.model.players[1]
@@ -77,22 +75,30 @@ class GraphicPlayer:
     # HINT: The constructor should create and draw the graphical elements of the player (score and cannon)
     # HINT: The constructor probably needs a few additional parameters e.g. to access the game window.
     
-    def __init__(self, player, win):
+    def __init__(self, game, player, win):
+        self.game = game
         self.player = player
         self.win = win
+        self.lastProj = None
+        self.rect = None
+
+        self.drawRect()
+
+    def drawRect(self):
+        self.rect = Rectangle(Point(self.getX() + self.game.getCannonSize() / 2, self.game.getCannonSize()), Point(self.getX() - self.game.getCannonSize() / 2, 0)) 
+        self.rect.setFill(self.getColor())
+        self.rect.setOutline(self.getColor())
+        self.rect.draw(self.win)
 
     def fire(self, angle, vel):
+        print("FIREEE")
         # Fire the cannon of the underlying player object
-        proj = self.player.fire(angle, vel)
+        proj = GraphicProjectile(self.player.fire(angle, vel), self.getColor(), self.win, self.game.getBallSize())
         
-        #TODO: We need to undraw the old GraphicProjectile for this player (if there is one).
-        if self.lastProj != null:
+        if self.lastProj != None:
             self.lastProj.undraw()
         self.lastProj = proj
 
-        # TODO: proj is a Projectile, but we should return a GraphicProjectile here! We need to create a GraphicProjectile "wrapping" around proj.
-        proj = GraphicProjectile(proj, self.getColor(), self.win)
-        print("fireed from graphicPlayer!")
         return proj
     
     def getAim(self):
@@ -120,22 +126,28 @@ class GraphicProjectile:
     # TODO: This one also needs a constructor, and it should take a Projectile object as parameter and store it in self.proj.
     # Hint: We are also going to need access to the game window
     # Hint: There is no color attribute in the Projectile class, either it needs to be passed to the constructor here or Projectile needs to be modified.
-    def __init__(self, proj, color, win):
+    def __init__(self, proj, color, win, size):
         self.proj = proj
         self.color = color
         self.win = win
+        self.size = size
 
-        self.circle = Circle(Point(self.proj.getX() , self.proj.getY()), self.proj.getBallSize())
-        self.circle.setFill(color)
-        self.circle.setOutline(color)
-        self.circle.draw(win) 
-        print("is drawn!")
+        self.circle = None
+        self.drawCricle()
 
+    def drawCricle(self):
+        self.circle = Circle(Point(self.proj.getX() , self.proj.getY()), self.size)
+        self.circle.setFill(self.color)
+        self.circle.setOutline(self.color)
+        self.circle.draw(self.win)
 
     def update(self, dt):
         # update the projectile
+        print("updateG")
         self.proj.update(dt)
         # TODO: Graphic stuff needs to happen here.
+        self.undraw()
+        self.drawCricle()
         
     def getX(self):
         return self.proj.getX()
@@ -149,7 +161,7 @@ class GraphicProjectile:
     # TODO: There needs to be a way of undrawing the projectile.
     # HINT: All graphical components in graphics.py have undraw()-methods  
     def undraw(self):
-        circle.undraw()
+        self.circle.undraw()
 
 
 """ A somewhat specific input dialog class (adapted from the book) """
