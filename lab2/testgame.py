@@ -43,6 +43,9 @@ def runTests(game):
 
     #Testing "Manual fire" for player 0
     proj = game.getCurrentPlayer().fire(30,31)
+    #print(proj.getX())
+    #print(game.getCurrentPlayerNumber())
+    #print(game.getCurrentPlayer().getX())
     assert (proj.getX() == game.getCurrentPlayer().getX()), "Fired projectile should start at player X-position"
     assert (proj.getY() == 10/2), "Fired projectile Y-position should start half the cannon size"
     assert (proj.isMoving()), "projectile should be moving"

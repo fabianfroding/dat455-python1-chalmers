@@ -71,7 +71,6 @@ class Player:
 
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
     def fire(self, angle, velocity):
-        print("firepepp")
         if (self.color == "red"):
             angle = -angle
             velocity = -velocity
@@ -85,16 +84,43 @@ class Player:
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
         dist = proj.getX() - self.getX()
-        if (dist < 0):
+        print("DISt: " + str(dist))
+
+        if dist < 0:
+            print("dist neg")
+            #dist = (proj.getX() + self.game.getBallSize()) - (self.getX() - self.game.getCannonSize()) - 1
+            selfX = self.getX() - self.game.getCannonSize() / 2
+            projX = proj.getX() + self.game.getBallSize()
+
+            print("selfX: " + str(selfX))
+            print("projX: " + str(projX))
+
+            if projX > selfX:
+                dist = 0
+        elif dist > 0:
+            print("dist pos")
+            selfX = self.getX() + self.game.getCannonSize() / 2
+            projX = proj.getX() - self.game.getBallSize()
+
+            print("selfX: " + str(selfX))
+            print("projX: " + str(projX))
+
+            if projX < selfX:
+                dist = 0
+            #dist = (proj.getX() - self.game.getBallSize()) - (self.getX() + self.game.getCannonSize()) + 1
+
+        #print("dist: " + str(dist))
+
+        #if (self.game.getCurrentPlayerNumber() == 1):
             # Player 1
-            dist = (proj.getX() - self.game.getBallSize()) - (self.getX() - self.game.getCannonSize()) + 1
-            if dist <= self.game.getBallSize() - self.game.getCannonSize() and dist >= self.game.getBallSize() + self.game.getCannonSize():
-                return 0
-        else:
+            #dist = (proj.getX() + self.game.getBallSize()) - (self.getX() + self.game.getCannonSize()) - 1
+            #if dist <= self.game.getBallSize() - self.game.getCannonSize() and dist >= self.game.getBallSize() + self.game.getCannonSize():
+                #dist = 0
+        #else:
             # Player 0
-            dist = (proj.getX() + self.game.getBallSize()) - (self.getX() + self.game.getCannonSize()) - 1
-            if dist >= self.game.getBallSize() - self.game.getCannonSize() and dist <= self.game.getBallSize() + self.game.getCannonSize():
-                return 0
+            #dist = (proj.getX() - self.game.getBallSize()) - (self.getX() - self.game.getCannonSize()) + 1
+            #if dist >= self.game.getBallSize() - self.game.getCannonSize() and dist <= self.game.getBallSize() + self.game.getCannonSize():
+                #dist = 0
 
         return dist
 
@@ -147,7 +173,6 @@ class Projectile:
          for large values the projectile may move erratically)
     """
     def update(self, time):
-        print("updating")
         # Compute new velocity based on acceleration from gravity/wind
         yvel1 = self.yvel - 9.8*time
         xvel1 = self.xvel + self.wind*time

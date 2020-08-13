@@ -37,6 +37,12 @@ class GraphicGame:
         self.model.currentPlayer = self.model.players[0]
         self.model.otherPlayer = self.model.players[1]
 
+        self.drawGround()
+
+    def drawGround(self):
+        line = Line(Point(-110, 0), Point(110, 0))
+        line.draw(self.win)
+
     def getPlayers(self):
         return self.model.getPlayers()
 
@@ -81,8 +87,10 @@ class GraphicPlayer:
         self.win = win
         self.lastProj = None
         self.rect = None
+        self.scoreText = None
 
         self.drawRect()
+        self.drawScore()
 
     def drawRect(self):
         self.rect = Rectangle(Point(self.getX() + self.game.getCannonSize() / 2, self.game.getCannonSize()), Point(self.getX() - self.game.getCannonSize() / 2, 0)) 
@@ -90,14 +98,19 @@ class GraphicPlayer:
         self.rect.setOutline(self.getColor())
         self.rect.draw(self.win)
 
+    def drawScore(self):
+        self.scoreText = Text(Point(self.getX(), -3), "Score " + str(self.getScore()))
+        self.scoreText.draw(self.win)
+
     def fire(self, angle, vel):
-        print("FIREEE")
         # Fire the cannon of the underlying player object
         proj = GraphicProjectile(self.player.fire(angle, vel), self.getColor(), self.win, self.game.getBallSize())
         
         if self.lastProj != None:
             self.lastProj.undraw()
         self.lastProj = proj
+
+        self.game.nextPlayer()
 
         return proj
     
@@ -119,6 +132,9 @@ class GraphicPlayer:
     def increaseScore(self):
         self.player.increaseScore()
         # TODO: This seems like a good place to update the score text.
+        self.scoreText.undraw()
+        self.drawScore()
+        self.game.newRound()
 
 
 """ A graphic wrapper around the Projectile class (adapted from ShotTracker in book)"""
@@ -143,7 +159,6 @@ class GraphicProjectile:
 
     def update(self, dt):
         # update the projectile
-        print("updateG")
         self.proj.update(dt)
         # TODO: Graphic stuff needs to happen here.
         self.undraw()

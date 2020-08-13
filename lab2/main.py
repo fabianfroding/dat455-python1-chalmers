@@ -32,9 +32,18 @@ def graphicPlay():
             break
         else:
             (ang, vel) = inputDialog.getValues()
-            print(ang)
-            print(vel)
-            graphicFire(game, ang, vel)
+            inputDialog.close()
+            proj = graphicFire(game, ang, vel)
+
+            #print(game.getCurrentPlayer().projectileDistance(proj))
+            print(proj.getX())
+            print(game.getCurrentPlayer().getX())
+            print(game.getCurrentPlayer().projectileDistance(proj))
+            if game.getCurrentPlayer().projectileDistance(proj) == 0.0:
+                game.getOtherPlayer().increaseScore()
+                game.newRound()
+
+            inputDialog = InputDialog(0, 0, game.getCurrentWind())
 
 
 
