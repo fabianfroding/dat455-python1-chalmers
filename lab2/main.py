@@ -21,9 +21,12 @@ def graphicPlay():
     game = GraphicGame(Game(10, 3))
     game.newRound()
 
-    inputDialog = InputDialog(0, 0, game.getCurrentWind())
+    inputDialog = None
 
     while(True):
+        if inputDialog != None:
+            inputDialog.close()
+        inputDialog = InputDialog(game.getCurrentPlayer().getLastAngle(), game.getCurrentPlayer().getLastVelocity(), game.getCurrentWind())
         choice = inputDialog.interact()
 
         if choice == "Quit":
@@ -34,11 +37,7 @@ def graphicPlay():
             (ang, vel) = inputDialog.getValues()
             inputDialog.close()
             proj = graphicFire(game, ang, vel)
-
-            #print(game.getCurrentPlayer().projectileDistance(proj))
-            print(proj.getX())
-            print(game.getCurrentPlayer().getX())
-            print(game.getCurrentPlayer().projectileDistance(proj))
+            
             if game.getCurrentPlayer().projectileDistance(proj) == 0.0:
                 game.getOtherPlayer().increaseScore()
                 game.newRound()

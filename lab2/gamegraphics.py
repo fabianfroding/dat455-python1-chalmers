@@ -89,6 +89,9 @@ class GraphicPlayer:
         self.rect = None
         self.scoreText = None
 
+        self.lastAngle = 0
+        self.lastVel = 0
+
         self.drawRect()
         self.drawScore()
 
@@ -109,6 +112,9 @@ class GraphicPlayer:
         if self.lastProj != None:
             self.lastProj.undraw()
         self.lastProj = proj
+
+        self.lastAngle = angle
+        self.lastVel = vel
 
         self.game.nextPlayer()
 
@@ -135,6 +141,12 @@ class GraphicPlayer:
         self.scoreText.undraw()
         self.drawScore()
         self.game.newRound()
+
+    def getLastAngle(self):
+        return self.lastAngle
+
+    def getLastVelocity(self):
+        return self.lastVel
 
 
 """ A graphic wrapper around the Projectile class (adapted from ShotTracker in book)"""
