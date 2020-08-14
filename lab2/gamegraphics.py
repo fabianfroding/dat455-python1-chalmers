@@ -106,7 +106,6 @@ class GraphicPlayer:
         self.scoreText.draw(self.win)
 
     def fire(self, angle, vel):
-        # Fire the cannon of the underlying player object
         proj = GraphicProjectile(self.player.fire(angle, vel), self.getColor(), self.win, self.game.getBallSize())
         
         if self.lastProj != None:
@@ -115,8 +114,6 @@ class GraphicPlayer:
 
         self.lastAngle = angle
         self.lastVel = vel
-
-        self.game.nextPlayer()
 
         return proj
     
@@ -137,7 +134,6 @@ class GraphicPlayer:
         
     def increaseScore(self):
         self.player.increaseScore()
-        # TODO: This seems like a good place to update the score text.
         self.scoreText.undraw()
         self.drawScore()
         self.game.newRound()

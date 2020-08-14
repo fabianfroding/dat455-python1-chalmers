@@ -75,7 +75,7 @@ class Player:
             angle = -angle
             velocity = -velocity
 
-        proj = Projectile(angle, velocity, self.game.getCurrentWind(), self.x, self.game.cannonSize / 2, -110, 110)
+        proj = Projectile(angle, velocity, self.game.getCurrentWind(), self.getX(), self.game.cannonSize / 2, -110, 110)
         self.lastAngle = angle
         self.lastVelocity = velocity
         self.currentProjectile = proj
@@ -91,14 +91,17 @@ class Player:
 
             if projX > selfX:
                 dist = 0
-
+            else:
+                dist = projX - selfX
         elif dist > 0:
             selfX = self.getX() + self.game.getCannonSize() / 2
             projX = proj.getX() - self.game.getBallSize()
 
             if projX < selfX:
                 dist = 0
-
+            else:
+                dist = projX - selfX
+                
         return dist
 
     """ The current score of this player """
