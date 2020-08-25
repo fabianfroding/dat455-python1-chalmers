@@ -14,10 +14,6 @@ def graphicFire(game, angle, vel):
     return gproj
 
 def graphicPlay():
-    # TODO: This is where you implement the game loop
-    # HINT: Creating a GraphicGame is a good start. 
-    # HINT: You can look at the text interface for some inspiration
-    # Note that this code should not directly work with any drawing or such, all that is done by the methods in the classes
     game = GraphicGame(Game(10, 3))
     game.newRound()
 
