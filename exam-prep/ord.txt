@@ -1,0 +1,17 @@
+metod ; method ; N
+formatera ; format ; V
+formatering ; formatting ; N
+muterbar ; mutable ; A
+icke-muterbar ; non-mutable ; A
+skräp ; garbage ; N
+referera ; refer ; V
+muterbarhet ; mutability ; N
+effektiv ; efficient ; A
+ineffektiv ; inefficient ; A
+optimering ; optimization ; N
+element ; element ; N
+öppna ; open ; V
+stänga ; close ; V
+trädstruktur ; tree structure ; N
+träd ; tree ; N
+arbetskatalog ; working directory ; N
